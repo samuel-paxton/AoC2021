@@ -25,4 +25,29 @@ public class utils {
 
         return nums;
     }
+
+    public static List<MovementCommand> readListOfMovementCommands(String filename) {
+        List<MovementCommand> commands = new ArrayList<MovementCommand>();
+
+        try {
+            File file = new File(filename);
+            Scanner myReader = new Scanner(file);
+
+            while (myReader.hasNextLine()) {
+                String data = myReader.nextLine();
+                String[] values = data.split(" ");
+                String direction = values[0];
+                int amount = Integer.parseInt(values[1]);
+
+                commands.add(new MovementCommand(direction, amount));
+            }
+
+            myReader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("Couldn't read from file: ");
+            e.printStackTrace();
+        }
+
+        return commands;
+    }
 }
