@@ -26,6 +26,27 @@ public class utils {
         return nums;
     }
 
+    public static List<String> readListOfStringsFromFile(String filename) {
+        List<String> strings = new ArrayList<String>();
+
+        try {
+            File file = new File(filename);
+            Scanner myReader = new Scanner(file);
+
+            while (myReader.hasNextLine()) {
+                String data = myReader.nextLine();
+                strings.add(data);
+            }
+
+            myReader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("Couldn't read from file: ");
+            e.printStackTrace();
+        }
+
+        return strings;
+    }
+
     public static List<MovementCommand> readListOfMovementCommands(String filename) {
         List<MovementCommand> commands = new ArrayList<MovementCommand>();
 
