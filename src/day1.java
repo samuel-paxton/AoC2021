@@ -1,13 +1,7 @@
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class day1 {
-    public static void main(String[] args) {
-        List<Integer> depths = utils.readListOfNumbersFromFile("inputs/day1.txt");
-
+    public static int part1(List<Integer> depths) {
         int previousDepth = Integer.MAX_VALUE;
         int numDepthIncreases = 0;
 
@@ -19,6 +13,17 @@ public class day1 {
             previousDepth = currentDepth;
         }
 
-        System.out.println("Number of times depth increased from previous measurement: " + numDepthIncreases);
+        return numDepthIncreases;
+    }
+
+    public static int part2(List<Integer> depths) {
+        return 10;
+    }
+
+    public static void main(String[] args) {
+        List<Integer> depths = utils.readListOfNumbersFromFile("inputs/day1.txt");
+
+        System.out.println("Number of times depth increased: " + part1(depths));
+        System.out.println("Number of times three-measurement sliding window increased: " + part2(depths));
     }
 }
