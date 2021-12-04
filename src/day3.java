@@ -67,8 +67,7 @@ public class day3 {
             binaryNums.removeAll(toBeRemoved);
         }
 
-        String oxygenGeneratorString = binaryNums.get(0);
-        return oxygenGeneratorString;
+        return binaryNums.get(0);
     }
 
     private static String getCO2ScrubberString(List<String> originalBinaryNums) {
@@ -102,8 +101,7 @@ public class day3 {
             binaryNums.removeAll(toBeRemoved);
         }
 
-        String co2ScrubberString = binaryNums.get(0);
-        return co2ScrubberString;
+        return binaryNums.get(0);
     }
 
     private static HashMap<Integer, Integer> buildMostCommonBitMap(List<String> binaryNums) {
@@ -135,7 +133,7 @@ public class day3 {
     }
 
     private static boolean equallyCommon(int mostCommonBit) {
-        return mostCommonBit == -1 ? true : false;
+        return mostCommonBit == -1;
     }
 
     public static void main(String[] args) {
