@@ -33,7 +33,6 @@ public class day3 {
         String oxygenGeneratorString = getOxygenGeneratorString(binaryNums);
         String co2ScrubberString = getCO2ScrubberString(binaryNums);
 
-        System.out.println(oxygenGeneratorString + ", " + co2ScrubberString);
         int oxygenGeneratorRating = Integer.parseInt(oxygenGeneratorString, 2);
         int co2ScrubberRating = Integer.parseInt(co2ScrubberString, 2);
 
@@ -143,6 +142,6 @@ public class day3 {
         List<String> binaryNums = utils.readListOfStringsFromFile("inputs/day3.txt");
 
         System.out.println("Power consumption of the submarine (Part 1): " + part1(binaryNums));
-        System.out.println("Final blah (Part 2): " + part2(binaryNums));
+        System.out.println("Life support rating of the submarine (Part 2): " + part2(binaryNums));
     }
 }
