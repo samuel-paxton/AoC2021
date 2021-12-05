@@ -1,3 +1,5 @@
+package day2;
+
 public class MovementCommand {
     public String direction;
     public int amount;

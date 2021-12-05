@@ -1,3 +1,7 @@
+package utils;
+
+import day2.MovementCommand;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -6,7 +10,7 @@ import java.util.Scanner;
 
 public class utils {
     public static List<Integer> readListOfNumbersFromFile(String filename) {
-        List<Integer> nums = new ArrayList<Integer>();
+        List<Integer> nums = new ArrayList<>();
 
         try {
             File file = new File(filename);
@@ -27,7 +31,7 @@ public class utils {
     }
 
     public static List<String> readListOfStringsFromFile(String filename) {
-        List<String> strings = new ArrayList<String>();
+        List<String> strings = new ArrayList<>();
 
         try {
             File file = new File(filename);
@@ -48,7 +52,7 @@ public class utils {
     }
 
     public static List<MovementCommand> readListOfMovementCommands(String filename) {
-        List<MovementCommand> commands = new ArrayList<MovementCommand>();
+        List<MovementCommand> commands = new ArrayList<>();
 
         try {
             File file = new File(filename);

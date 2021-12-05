@@ -1,3 +1,7 @@
+package day1;
+
+import utils.utils;
+
 import java.util.List;
 
 public class day1 {
@@ -42,7 +46,7 @@ public class day1 {
     }
 
     public static void main(String[] args) {
-        List<Integer> depths = utils.readListOfNumbersFromFile("inputs/day1.txt");
+        List<Integer> depths = utils.readListOfNumbersFromFile("inputs/day1/day1.txt");
 
         System.out.println("Number of times depth increased (Part 1): " + part1(depths));
         System.out.println("Number of times three-measurement sliding window increased (Part 2): " + part2(depths, 3));

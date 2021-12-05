@@ -1,5 +1,8 @@
+package day3;
+
 import java.util.ArrayList;
 import java.util.List;
+import utils.utils;
 
 public class day3 {
     public static int part1(List<String> binaryNums) {
@@ -93,7 +96,7 @@ public class day3 {
     }
 
     public static void main(String[] args) {
-        List<String> binaryNums = utils.readListOfStringsFromFile("inputs/day3.txt");
+        List<String> binaryNums = utils.readListOfStringsFromFile("inputs/day3/day3.txt");
 
         System.out.println("Power consumption of the submarine (Part 1): " + part1(binaryNums));
         System.out.println("Life support rating of the submarine (Part 2): " + part2(binaryNums));
