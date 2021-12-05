@@ -1,18 +1,18 @@
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class day3 {
     public static int part1(List<String> binaryNums) {
         final int binaryNumberLength = binaryNums.get(0).length();
-        HashMap<Integer, Integer> mostCommonBitMap = buildMostCommonBitMap(binaryNums);
 
         StringBuilder gammaRateSB = new StringBuilder();
         StringBuilder epsilonRateSB = new StringBuilder();
+
         for (int i = 0; i < binaryNumberLength; i++) {
-            int mostCommonBit = mostCommonBitMap.get(i);
-            if (mostCommonBit == 1) {
+            int numOnes = countOnesAtIndexN(binaryNums, i);
+            int numZeroes = binaryNums.size() - numOnes;
+
+            if (numOnes > numZeroes) {
                 gammaRateSB.append("1");
                 epsilonRateSB.append("0");
             } else {
@@ -20,120 +20,76 @@ public class day3 {
                 epsilonRateSB.append("1");
             }
         }
-        String gammaString = gammaRateSB.toString();
-        String epsilonString = epsilonRateSB.toString();
 
-        int gammaRate = Integer.parseInt(gammaString, 2);
-        int epsilonRate = Integer.parseInt(epsilonString, 2);
+        int gammaRate = Integer.parseInt(gammaRateSB.toString(), 2);
+        int epsilonRate = Integer.parseInt(epsilonRateSB.toString(), 2);
 
         return gammaRate * epsilonRate;
     }
 
     public static int part2(List<String> binaryNums) {
-        String oxygenGeneratorString = getOxygenGeneratorString(binaryNums);
-        String co2ScrubberString = getCO2ScrubberString(binaryNums);
-
-        int oxygenGeneratorRating = Integer.parseInt(oxygenGeneratorString, 2);
-        int co2ScrubberRating = Integer.parseInt(co2ScrubberString, 2);
+        int oxygenGeneratorRating = getOxygenGeneratorRating(new ArrayList<>(binaryNums));
+        int co2ScrubberRating = getCO2ScrubberRating(new ArrayList<>(binaryNums));
 
         return oxygenGeneratorRating * co2ScrubberRating;
     }
 
-    private static String getOxygenGeneratorString(List<String> originalBinaryNums) {
-        List<String> binaryNums = new ArrayList<>(originalBinaryNums);
+    private static int getOxygenGeneratorRating(List<String> binaryNums) {
+        return getRating(binaryNums, "oxygen");
+    }
+
+    private static int getCO2ScrubberRating(List<String> binaryNums) {
+        return getRating(binaryNums, "co2");
+    }
+
+    private static int getRating(List<String> binaryNums, String type) {
         final int binaryNumberLength = binaryNums.get(0).length();
 
         for (int i = 0; i < binaryNumberLength; i++) {
-            if (binaryNums.size() == 1) {
-                break;
-            }
-
-            Map<Integer, Integer> mostCommonBitMap = buildMostCommonBitMap(binaryNums);
-            List<String> toBeRemoved = new ArrayList<>();
-
-            for (String binaryNum : binaryNums) {
-                int bit = Character.getNumericValue(binaryNum.charAt(i));
-                int mostCommonBit = mostCommonBitMap.get(i);
-
-                if (equallyCommon(mostCommonBit)) {
-                    mostCommonBit = 1;
-                }
-
-                if (bit != mostCommonBit) {
-                    toBeRemoved.add(binaryNum);
-                }
-            }
-
-            binaryNums.removeAll(toBeRemoved);
-        }
-
-        return binaryNums.get(0);
-    }
-
-    private static String getCO2ScrubberString(List<String> originalBinaryNums) {
-        List<String> binaryNums = new ArrayList<>(originalBinaryNums);
-        final int binaryNumberLength = binaryNums.get(0).length();
-
-        for (int i = 0; i < binaryNumberLength; i++) {
-            if (binaryNums.size() == 1) {
-                break;
-            }
-
-            Map<Integer, Integer> mostCommonBitMap = buildMostCommonBitMap(binaryNums);
-            List<String> toBeRemoved = new ArrayList<>();
-
-            for (String binaryNum : binaryNums) {
-                int bit = Character.getNumericValue(binaryNum.charAt(i));
-                int mostCommonBit = mostCommonBitMap.get(i);
-                int leastCommonBit;
-
-                if (equallyCommon(mostCommonBit)) {
-                    leastCommonBit = 0;
-                } else {
-                    leastCommonBit = mostCommonBit ^ 1;
-                }
-
-                if (bit != leastCommonBit) {
-                    toBeRemoved.add(binaryNum);
-                }
-            }
-
-            binaryNums.removeAll(toBeRemoved);
-        }
-
-        return binaryNums.get(0);
-    }
-
-    private static HashMap<Integer, Integer> buildMostCommonBitMap(List<String> binaryNums) {
-        HashMap<Integer, Integer> mostCommonBitByIndex = new HashMap<>();
-        final int binaryNumLength = binaryNums.get(0).length();
-
-        for (int i = 0; i < binaryNumLength; i++) {
-            int numOnes = 0;
-
-            for (String binaryNum : binaryNums) {
-                int bit = Character.getNumericValue(binaryNum.charAt(i));
-                if (bit == 1) {
-                    numOnes++;
-                }
-            }
-
+            int numOnes = countOnesAtIndexN(binaryNums, i);
             int numZeroes = binaryNums.size() - numOnes;
 
-            if (numOnes > numZeroes) {
-                mostCommonBitByIndex.put(i, 1);
-            } else if (numZeroes > numOnes) {
-                mostCommonBitByIndex.put(i, 0);
-            } else { //equal
-                mostCommonBitByIndex.put(i, -1);
+            char desiredBit;
+            if (type.equals("oxygen")) {
+                if (numOnes >= numZeroes) {
+                    desiredBit = '1';
+                } else {
+                    desiredBit = '0';
+                }
+            } else { //co2
+                if (numOnes < numZeroes) {
+                    desiredBit = '1';
+                } else {
+                    desiredBit = '0';
+                }
+            }
+
+            List<String> toBeRemoved = new ArrayList<>();
+            for (String binaryNum : binaryNums) {
+                if (binaryNum.charAt(i) != desiredBit) {
+                    toBeRemoved.add(binaryNum);
+                }
+            }
+
+            binaryNums.removeAll(toBeRemoved);
+
+            if (binaryNums.size() == 1) {
+                break;
             }
         }
 
-        return mostCommonBitByIndex;
+        return Integer.parseInt(binaryNums.get(0), 2);
     }
 
-    private static boolean equallyCommon(int mostCommonBit) {
-        return mostCommonBit == -1;
+    private static int countOnesAtIndexN(List<String> binaryNums, int i) {
+        int numOnes = 0;
+        for (String binaryNum : binaryNums) {
+            if (binaryNum.charAt(i) == '1') {
+                numOnes++;
+            }
+        }
+
+        return numOnes;
     }
 
     public static void main(String[] args) {
